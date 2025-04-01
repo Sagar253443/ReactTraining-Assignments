@@ -1,0 +1,96 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>User List with Filters</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+        }
+        input {
+            margin: 5px;
+            padding: 5px;
+        }
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            margin-top: 10px;
+        }
+        th, td {
+            border: 1px solid #ddd;
+            padding: 8px;
+            text-align: left;
+        }
+        th {
+            background: #f4f4f4;
+        }
+    </style>
+</head>
+<body>
+
+    <h2>User List</h2>
+
+    <input type="text" id="nameFilter" placeholder="Filter by Name">
+    <input type="number" id="ageFilter" placeholder="Filter by Age">
+    <input type="text" id="emailFilter" placeholder="Filter by Email">
+    <button onclick="filterUsers()">Filter</button>
+
+    <table>
+        <thead>
+            <tr>
+                <th>Name</th>
+                <th>Age</th>
+                <th>Email</th>
+            </tr>
+        </thead>
+        <tbody id="userTable"></tbody>
+    </table>
+
+    <script>
+        document.addEventListener("DOMContentLoaded", function () {
+            const users = [
+                { name: "Pranav Hegde", age: 25, email: "pranav@gmail.com" },
+                { name: "Gopal", age: 25, email: "gopalkrishna@gmail.com" },
+                { name: "Pragathi", age: 30, email: "pragathi12@gmail.com" },
+                {name:"Kaveri" , age:28,email:"kaveri65@gmail.com"}
+            ];
+
+            if (!localStorage.getItem("users")) {
+                localStorage.setItem("users", JSON.stringify(users));
+            }
+
+            displayUsers(JSON.parse(localStorage.getItem("users")));
+        });
+
+        function displayUsers(users) {
+            const tableBody = document.getElementById("userTable");
+            tableBody.innerHTML = "";
+            users.forEach(user => {
+                const row = `<tr>
+                    <td>${user.name}</td>
+                    <td>${user.age}</td>
+                    <td>${user.email}</td>
+                </tr>`;
+                tableBody.innerHTML += row;
+            });
+        }
+
+        function filterUsers() {
+            const nameFilter = document.getElementById("nameFilter").value.toLowerCase();
+            const ageFilter = document.getElementById("ageFilter").value;
+            const emailFilter = document.getElementById("emailFilter").value.toLowerCase();
+
+            const users = JSON.parse(localStorage.getItem("users"));
+            const filteredUsers = users.filter(user => 
+                (nameFilter === "" || user.name.toLowerCase().includes(nameFilter)) &&
+                (ageFilter === "" || user.age == ageFilter) &&
+                (emailFilter === "" || user.email.toLowerCase().includes(emailFilter))
+            );
+
+            displayUsers(filteredUsers);
+        }
+    </script>
+
+</body>
+</html>

@@ -1,0 +1,75 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Sticky Navbar & Background Image Toggle</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            transition: background-image 0.5s ease-in-out;
+            background-image: url('images/lightTheme.jpg'); 
+            background-size: cover;
+            background-position: center;
+            height: 100vh;
+            margin: 0;
+        }
+        .navbar {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            background: rgba(0, 0, 0, 0.7);
+            color: white;
+            padding: 10px 20px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            z-index: 1000;
+        }
+        .content {
+            margin-top: 60px;
+            padding: 20px;
+        }
+        .checkbox-container {
+            display: flex;
+            align-items: center;
+        }
+        label {
+            margin-right: 5px;
+            font-size: 16px;
+        }
+    </style>
+</head>
+<body>
+
+    <div class="navbar">
+        <h2>Navbar</h2>
+        <div class="checkbox-container">
+            <label for="themeToggle">Dark Mode</label>
+            <input type="checkbox" id="themeToggle">
+        </div>
+    </div>
+
+    <div class="content">
+        <h3>Scroll down to test the sticky navbar.</h3>
+        <p>"The only way to do great work is to love what you do." – Steve Jobs</p>
+        <p>Fun Fact: Did you know that honey never spoils? Archaeologists found pots of honey
+           in ancient Egyptian tombs that were over 3,000 years old and still perfectly edible!</p>
+        <p style="height: 1000px;">Scroll to see the effect.</p>
+    </div>
+
+    <script>
+        document.getElementById("themeToggle").addEventListener("change", function () {
+            if (this.checked) {
+                document.body.style.backgroundImage = "url('images/darkTheme.jpg')";
+                document.body.style.color="white"; 
+            } else {
+                document.body.style.backgroundImage = "url('images/lightTheme.jpg')";
+                documnet.body.style.color="black";
+            }
+        });
+    </script>
+
+</body>
+</html>
