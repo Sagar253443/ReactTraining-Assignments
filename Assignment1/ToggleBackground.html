@@ -34,20 +34,28 @@
         .checkbox-container {
             display: flex;
             align-items: center;
+            padding-right: 40px;
         }
         label {
             margin-right: 5px;
             font-size: 16px;
+        }
+        a{
+            color: white;
         }
     </style>
 </head>
 <body>
 
     <div class="navbar">
-        <h2>Navbar</h2>
+        <h2>ToggleBackGround</h2>
+        <a href="#">Home</a>
+        <a href="#">About Us</a>
+        <a href="#">Contact</a>
+        <a href="#">LogIn/SignUp</a>
         <div class="checkbox-container">
-            <label for="themeToggle">Dark Mode</label>
             <input type="checkbox" id="themeToggle">
+            <label for="themeToggle">Dark Mode</label>
         </div>
     </div>
 
@@ -66,7 +74,7 @@
                 document.body.style.color="white"; 
             } else {
                 document.body.style.backgroundImage = "url('images/lightTheme.jpg')";
-                documnet.body.style.color="black";
+                document.body.style.color="black";
             }
         });
     </script>
