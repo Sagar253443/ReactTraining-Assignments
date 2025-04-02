@@ -3,19 +3,22 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>User List with Filters</title>
+    <title>Filter User</title>
     <style>
         body {
             font-family: Arial, sans-serif;
         }
         input {
-            margin: 5px;
-            padding: 5px;
+            margin: 10px 0;
+            padding: 8px;
+            width: 100%;
+            box-sizing: border-box;
         }
         table {
             width: 100%;
             border-collapse: collapse;
             margin-top: 10px;
+            display: none; /* Hide table initially */
         }
         th, td {
             border: 1px solid #ddd;
@@ -31,12 +34,9 @@
 
     <h2>User List</h2>
 
-    <input type="text" id="nameFilter" placeholder="Filter by Name">
-    <input type="number" id="ageFilter" placeholder="Filter by Age">
-    <input type="text" id="emailFilter" placeholder="Filter by Email">
-    <button onclick="filterUsers()">Filter</button>
+    <input type="text" id="filterInput" placeholder="Search by Name, Age, or Email">
 
-    <table>
+    <table id="userTable">
         <thead>
             <tr>
                 <th>Name</th>
@@ -44,7 +44,7 @@
                 <th>Email</th>
             </tr>
         </thead>
-        <tbody id="userTable"></tbody>
+        <tbody id="userTableBody"></tbody>
     </table>
 
     <script>
@@ -53,7 +53,7 @@
                 { name: "Pranav Hegde", age: 25, email: "pranav@gmail.com" },
                 { name: "Gopal", age: 25, email: "gopalkrishna@gmail.com" },
                 { name: "Pragathi", age: 30, email: "pragathi12@gmail.com" },
-                {name:"Kaveri" , age:28,email:"kaveri65@gmail.com"}
+                { name: "Kaveri", age: 28, email: "kaveri65@gmail.com" }
             ];
 
             if (!localStorage.getItem("users")) {
@@ -64,8 +64,17 @@
         });
 
         function displayUsers(users) {
-            const tableBody = document.getElementById("userTable");
+            const table = document.getElementById("userTable");
+            const tableBody = document.getElementById("userTableBody");
             tableBody.innerHTML = "";
+
+            if (users.length === 0) {
+                table.style.display = "none"; // Hide table if no data
+                return;
+            }
+
+            table.style.display = "table"; // Show table when there is data
+
             users.forEach(user => {
                 const row = `<tr>
                     <td>${user.name}</td>
@@ -76,20 +85,18 @@
             });
         }
 
-        function filterUsers() {
-            const nameFilter = document.getElementById("nameFilter").value.toLowerCase();
-            const ageFilter = document.getElementById("ageFilter").value;
-            const emailFilter = document.getElementById("emailFilter").value.toLowerCase();
-
+        document.getElementById("filterInput").addEventListener("input", function () {
+            const filterText = this.value.toLowerCase();
             const users = JSON.parse(localStorage.getItem("users"));
+
             const filteredUsers = users.filter(user => 
-                (nameFilter === "" || user.name.toLowerCase().includes(nameFilter)) &&
-                (ageFilter === "" || user.age == ageFilter) &&
-                (emailFilter === "" || user.email.toLowerCase().includes(emailFilter))
+                user.name.toLowerCase().includes(filterText) ||
+                user.age.toString().includes(filterText) ||
+                user.email.toLowerCase().includes(filterText)
             );
 
             displayUsers(filteredUsers);
-        }
+        });
     </script>
 
 </body>
